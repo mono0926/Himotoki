@@ -44,16 +44,18 @@ extension DecodeError: Hashable {
         }
     }
 
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         switch self {
         case let .missingKeyPath(keyPath):
-            return keyPath.hashValue
+            hasher.combine(keyPath.hashValue)
 
         case let .typeMismatch(expected, actual, keyPath):
-            return expected.hashValue ^ actual.hashValue ^ keyPath.hashValue
+            hasher.combine(expected)
+            hasher.combine(actual)
+            hasher.combine(keyPath)
 
         case let .custom(message):
-            return message.hashValue
+            hasher.combine(message)
         }
     }
 }

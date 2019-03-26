@@ -31,8 +31,8 @@ extension KeyPath: Hashable {
         return lhs.components == rhs.components
     }
 
-    public var hashValue: Int {
-        return components.reduce(0) { $0 ^ $1.hashValue }
+    public func hash(into hasher: inout Hasher) {
+        components.forEach { hasher.combine($0) }
     }
 }
 
